@@ -18,6 +18,11 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     text = update.message.text.lower()
+   
+    if update.message.from_user and update.message.from_user.id == 8016763053:
+        await update.message.reply_text("иди нахуй сука")
+        return
+        
 
     if re.search(
         r"\b(?:лавров(?:а|у)?|фидер(?:а|у|ом|е|ы|ов|ам|ами|ах)?)\b",
