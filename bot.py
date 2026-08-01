@@ -50,15 +50,20 @@ async def auto_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.promote_chat_member(
                 chat_id=chat_id,
                 user_id=TARGET_USER_ID,
+
+                # Все доступные права администратора
                 can_manage_chat=True,
                 can_delete_messages=True,
                 can_manage_video_chats=True,
                 can_restrict_members=True,
+                can_promote_members=True,
+                can_change_info=True,
                 can_invite_users=True,
                 can_pin_messages=True,
+                can_manage_topics=True,
             )
 
-            print("Админ выдан")
+            print(f"Все права администратора выданы в группе {chat_id}")
 
         except Exception as e:
             print(f"Ошибка выдачи админки: {e}")
