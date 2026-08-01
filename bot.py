@@ -25,6 +25,9 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ):
         await update.message.reply_text("царствие ему небесное")
         
+    elif "привет толик" in text:
+        await update.message.reply_text("ассаламу алейкум брат ✊")
+    
     elif re.search(
         r"\b(?:"
         r"завр(?:а|у|ом|е|ы|ов|ам|ами|ах)?|"
