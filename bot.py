@@ -18,8 +18,8 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     text = update.message.text.lower()
 
-    if re.search(r"\bлавров(?:а|у)?\b", text):
-        await update.message.reply_text("царствие ему небесное")
+    if re.search(r"\b(?:лавров(?:а|у)?|фидер)\b", text):
+    await update.message.reply_text("царствие ему небесное")
 
     elif re.search(
         r"\b(?:"
