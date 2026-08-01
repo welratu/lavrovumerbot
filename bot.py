@@ -16,9 +16,10 @@ TARGET_USER_ID = 8269818641
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.message.text:
         return
+
     text = update.message.text.lower()
 
-if re.search(
+    if re.search(
         r"\b(?:лавров(?:а|у)?|фидер(?:а|у|ом|е|ы|ов|ам|ами|ах)?)\b",
         text,
     ):
