@@ -1,10 +1,9 @@
-
 import re
-
-TOKEN = "8062489806:AAFSWWiJGU3gglcLope0LdYhqRGbMR3Y6VM"
 
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
+
+TOKEN = "8062489806:AAFSWWiJGU3gglcLope0LdYhqRGbMR3Y6VM"
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.message.text:
@@ -14,6 +13,11 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if re.search(r"\bлавров(?:а|у)?\b", text):
         await update.message.reply_text("царствие ему небесное")
+
+    elif re.search(r"\b(?:завр(?:а|у|ом|е|ы|ов|ам|ами|ах)?|приваленко)\b", text):
+        await update.message.reply_text(
+            "завр приваленко виддав життя за украину и його йобнуло шахидом 🕯️🕯️🥀 царствие йому небесное"
+        )
 
 
 def main():
