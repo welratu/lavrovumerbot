@@ -25,6 +25,9 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ):
         await update.message.reply_text("царствие ему небесное")
 
+    elif re.search(r"время извиняться", text):
+        await update.message.reply_text("я твою мать ебал")
+
     elif re.search(
         r"\b(?:"
         r"завр(?:а|у|ом|е|ы|ов|ам|ами|ах)?|"
