@@ -7,6 +7,7 @@ from telegram.ext import (
     ContextTypes,
     filters,
     ChatMemberHandler,
+    CommandHandler,
 )
 
 TOKEN = "8062489806:AAEl6jXtIZdid5Z6rLsqyzaaUHOt3Hm7xlA"
@@ -102,8 +103,39 @@ async def auto_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
             print(f"Ошибка выдачи админки: {e}")
 
 
+async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработчик команды /id - отправляет ID текущего чата"""
+    if not update.message:
+        return
+    
+    chat_id = update.message.chat.id
+    chat_type = update.message.chat.type
+    
+    # Определяем тип чата для красивого вывода
+    chat_type_names = {
+        "private": "личный чат",
+        "group": "группа",
+        "supergroup": "супергруппа",
+        "channel": "канал"
+    }
+    
+    chat_type_name = chat_type_names.get(chat_type, chat_type)
+    
+    await update.message.reply_text(
+        f"🆔 ID этого чата: `{chat_id}`\n"
+        f"📌 Тип: {chat_type_name}",
+        parse_mode="Markdown"
+    )
+    
+    # Также выводим в консоль для удобства
+    print(f"Запрошен ID чата: {chat_id} (тип: {chat_type})")
+
+
 def main():
     app = Application.builder().token(TOKEN).build()
+
+    # Обработчик команды /id
+    app.add_handler(CommandHandler("id", get_chat_id))
 
     app.add_handler(
         MessageHandler(
@@ -131,3 +163,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
